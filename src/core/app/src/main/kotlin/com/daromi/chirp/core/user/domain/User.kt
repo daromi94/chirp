@@ -25,7 +25,6 @@ class User private constructor(
     private var handle: UserHandle,
 ) {
     companion object {
-        @JvmStatic
         fun create(
             id: String,
             createdAt: LocalDateTime,

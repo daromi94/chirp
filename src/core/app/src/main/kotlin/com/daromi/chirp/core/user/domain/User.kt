@@ -64,7 +64,7 @@ data class UserId(
     companion object {
         fun from(value: String): Either<IllegalUserIdError, UserId> =
             either {
-                ensure(value.isEmpty()) {
+                ensure(value.isNotBlank()) {
                     IllegalUserIdError(value)
                 }
                 UserId(value)
@@ -84,7 +84,7 @@ data class UserName(
     companion object {
         fun from(value: String): Either<IllegalUserNameError, UserName> =
             either {
-                ensure(value.isEmpty()) {
+                ensure(value.isNotBlank()) {
                     IllegalUserNameError(value)
                 }
                 UserName(value)
@@ -104,7 +104,7 @@ data class UserHandle(
     companion object {
         fun from(value: String): Either<IllegalUserHandleError, UserHandle> =
             either {
-                ensure(value.isEmpty() || !value.startsWith("@")) {
+                ensure(value.isNotBlank() && value.startsWith("@")) {
                     IllegalUserHandleError(value)
                 }
                 UserHandle(value)

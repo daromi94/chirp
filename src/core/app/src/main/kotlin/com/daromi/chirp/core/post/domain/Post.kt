@@ -57,7 +57,7 @@ data class PostId(
     companion object {
         fun from(value: String): Either<IllegalPostIdError, PostId> =
             either {
-                ensure(value.isEmpty()) {
+                ensure(value.isNotBlank()) {
                     IllegalPostIdError(value)
                 }
                 PostId(value)
@@ -77,7 +77,7 @@ data class PostContent(
     companion object {
         fun from(value: String): Either<IllegalPostCommentError, PostContent> =
             either {
-                ensure(value.isEmpty()) {
+                ensure(value.isNotBlank()) {
                     IllegalPostCommentError(value)
                 }
                 PostContent(value)

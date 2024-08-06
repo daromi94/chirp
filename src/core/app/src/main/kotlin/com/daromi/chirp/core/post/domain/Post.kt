@@ -30,15 +30,15 @@ class Post private constructor(
             )
     }
 
-    val id: String get() = _id.value
+    val id: String get() = this._id.value
 
-    val userId: String get() = _userId.value
+    val userId: String get() = this._userId.value
 
-    val content: String get() = _content.value
+    val content: String get() = this._content.value
 
-    val createdAt: LocalDateTime get() = _createdAt.value
+    val createdAt: LocalDateTime get() = this._createdAt.value
 
-    val updatedAt: LocalDateTime get() = _updatedAt.value
+    val updatedAt: LocalDateTime get() = this._updatedAt.value
 
     fun update(
         content: String,
@@ -48,7 +48,8 @@ class Post private constructor(
         this._updatedAt = PostUpdatedAt(updatedAt)
     }
 
-    override fun toString(): String = "Post(id=$id, userId=$userId, content=$content, createdAt=$createdAt, updatedAt=$updatedAt)"
+    override fun toString(): String =
+        "Post(id=${this.id}, userId=${this.userId}, content=${this.content}, createdAt=${this.createdAt}, updatedAt=${this.updatedAt})"
 }
 
 data class PostId(
@@ -66,7 +67,7 @@ data class PostId(
         class IllegalPostIdError(
             private val value: String,
         ) : Error {
-            override val message: String get() = "illegal post id '$value'"
+            override val message: String get() = "illegal post id '${this.value}'"
         }
     }
 }
@@ -86,7 +87,7 @@ data class PostContent(
         class IllegalPostCommentError(
             private val value: String,
         ) : Error {
-            override val message: String get() = "illegal post comment '$value'"
+            override val message: String get() = "illegal post comment '${this.value}'"
         }
     }
 }

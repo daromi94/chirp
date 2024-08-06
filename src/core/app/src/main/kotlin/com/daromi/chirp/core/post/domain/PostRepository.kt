@@ -12,7 +12,7 @@ interface PostRepository {
 class PostSaveFailedError(
     private val id: String,
 ) : Error {
-    override val message: String get() = "post '$id' save failed"
+    override val message: String get() = "post '${this.id}' save failed"
 }
 
 sealed class PostSearchError : Error
@@ -20,11 +20,11 @@ sealed class PostSearchError : Error
 class PostSearchFailedError(
     private val id: String,
 ) : PostSearchError() {
-    override val message: String get() = "post '$id' search failed"
+    override val message: String get() = "post '${this.id}' search failed"
 }
 
 class PostNotFoundError(
     private val id: String,
 ) : PostSearchError() {
-    override val message: String get() = "post '$id' not found"
+    override val message: String get() = "post '${this.id}' not found"
 }

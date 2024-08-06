@@ -29,15 +29,15 @@ class User private constructor(
             )
     }
 
-    val id: String get() = _id.value
+    val id: String get() = this._id.value
 
-    val name: String get() = _name.value
+    val name: String get() = this._name.value
 
-    val handle: String get() = _handle.value
+    val handle: String get() = this._handle.value
 
-    val createdAt: LocalDateTime get() = _createdAt.value
+    val createdAt: LocalDateTime get() = this._createdAt.value
 
-    val updatedAt: LocalDateTime get() = _updatedAt.value
+    val updatedAt: LocalDateTime get() = this._updatedAt.value
 
     fun updateName(
         name: String,
@@ -55,7 +55,8 @@ class User private constructor(
         this._updatedAt = UserUpdatedAt(updatedAt)
     }
 
-    override fun toString(): String = "User(id=$id, name=$name, handle=$handle, createdAt=$createdAt, updatedAt=$updatedAt)"
+    override fun toString(): String =
+        "User(id=${this.id}, name=${this.name}, handle=${this.handle}, createdAt=${this.createdAt}, updatedAt=${this.updatedAt})"
 }
 
 data class UserId(
@@ -73,7 +74,7 @@ data class UserId(
         class IllegalUserIdError(
             private val value: String,
         ) : Error {
-            override val message: String get() = "illegal user id '$value'"
+            override val message: String get() = "illegal user id '${this.value}'"
         }
     }
 }
@@ -93,7 +94,7 @@ data class UserName(
         class IllegalUserNameError(
             private val value: String,
         ) : Error {
-            override val message: String get() = "illegal user name '$value'"
+            override val message: String get() = "illegal user name '${this.value}'"
         }
     }
 }
@@ -113,7 +114,7 @@ data class UserHandle(
         class IllegalUserHandleError(
             private val value: String,
         ) : Error {
-            override val message: String get() = "illegal user handle '$value'"
+            override val message: String get() = "illegal user handle '${this.value}'"
         }
     }
 }

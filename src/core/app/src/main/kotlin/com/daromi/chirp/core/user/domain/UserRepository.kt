@@ -15,16 +15,18 @@ class UserSaveFailedError(
     override val message: String get() = "user '${this.id}' save failed"
 }
 
-sealed class UserSearchError : Error
+sealed class UserSearchError(
+    protected val id: String,
+) : Error
 
 class UserSearchFailedError(
-    private val id: String,
-) : UserSearchError() {
-    override val message: String get() = "user '${this.id}' search failed"
+    id: String,
+) : UserSearchError(id) {
+    override val message: String get() = "user '${super.id}' search failed"
 }
 
 class UserNotFoundError(
-    private val id: String,
-) : UserSearchError() {
-    override val message: String get() = "user '${this.id}' not found"
+    id: String,
+) : UserSearchError(id) {
+    override val message: String get() = "user '${super.id}' not found"
 }

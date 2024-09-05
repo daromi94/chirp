@@ -17,16 +17,16 @@ class PostSaveFailedError(
 
 sealed class PostSearchError(
     protected val id: String,
-) : Error
+) : Error {
+    class PostSearchFailedError(
+        id: String,
+    ) : PostSearchError(id) {
+        override val message: String get() = "post '${super.id}' search failed"
+    }
 
-class PostSearchFailedError(
-    id: String,
-) : PostSearchError(id) {
-    override val message: String get() = "post '${super.id}' search failed"
-}
-
-class PostNotFoundError(
-    id: String,
-) : PostSearchError(id) {
-    override val message: String get() = "post '${this.id}' not found"
+    class PostNotFoundError(
+        id: String,
+    ) : PostSearchError(id) {
+        override val message: String get() = "post '${this.id}' not found"
+    }
 }

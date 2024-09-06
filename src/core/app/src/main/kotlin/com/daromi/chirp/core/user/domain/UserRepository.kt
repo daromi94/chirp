@@ -16,7 +16,7 @@ class UserSaveFailedError(
 }
 
 sealed class UserSearchError(
-    protected val id: String,
+    private val id: String,
 ) : Error {
     class UserSearchFailedError(
         id: String,

@@ -9,24 +9,22 @@ interface PostRepository {
     fun search(id: PostId): Either<PostSearchError, Post>
 }
 
-class PostSaveFailedError(
-    private val id: String,
+data class PostSaveFailedError(
+    val id: String,
 ) : Error {
     override val message: String get() = "post '${this.id}' save failed"
 }
 
-sealed class PostSearchError(
-    private val id: String,
-) : Error {
-    class PostSearchFailedError(
-        id: String,
-    ) : PostSearchError(id) {
-        override val message: String get() = "post '${super.id}' search failed"
+sealed class PostSearchError : Error {
+    data class PostSearchFailedError(
+        val id: String,
+    ) : PostSearchError() {
+        override val message: String get() = "post '${this.id}' search failed"
     }
 
-    class PostNotFoundError(
-        id: String,
-    ) : PostSearchError(id) {
-        override val message: String get() = "post '${super.id}' not found"
+    data class PostNotFoundError(
+        val id: String,
+    ) : PostSearchError() {
+        override val message: String get() = "post '${this.id}' not found"
     }
 }

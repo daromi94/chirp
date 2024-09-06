@@ -71,8 +71,8 @@ data class UserId(
                 UserId(value)
             }
 
-        class IllegalUserIdError(
-            private val value: String,
+        data class IllegalUserIdError(
+            val value: String,
         ) : Error {
             override val message: String get() = "illegal user id '${this.value}'"
         }
@@ -91,8 +91,8 @@ data class UserName(
                 UserName(value)
             }
 
-        class IllegalUserNameError(
-            private val value: String,
+        data class IllegalUserNameError(
+            val value: String,
         ) : Error {
             override val message: String get() = "illegal user name '${this.value}'"
         }
@@ -111,8 +111,8 @@ data class UserHandle(
                 UserHandle(value)
             }
 
-        class IllegalUserHandleError(
-            private val value: String,
+        data class IllegalUserHandleError(
+            val value: String,
         ) : Error {
             override val message: String get() = "illegal user handle '${this.value}'"
         }

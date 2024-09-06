@@ -64,8 +64,8 @@ data class PostId(
                 PostId(value)
             }
 
-        class IllegalPostIdError(
-            private val value: String,
+        data class IllegalPostIdError(
+            val value: String,
         ) : Error {
             override val message: String get() = "illegal post id '${this.value}'"
         }
@@ -84,8 +84,8 @@ data class PostContent(
                 PostContent(value)
             }
 
-        class IllegalPostCommentError(
-            private val value: String,
+        data class IllegalPostCommentError(
+            val value: String,
         ) : Error {
             override val message: String get() = "illegal post comment '${this.value}'"
         }

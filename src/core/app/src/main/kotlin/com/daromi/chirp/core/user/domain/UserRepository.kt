@@ -9,24 +9,22 @@ interface UserRepository {
     fun search(id: UserId): Either<UserSearchError, User>
 }
 
-class UserSaveFailedError(
-    private val id: String,
+data class UserSaveFailedError(
+    val id: String,
 ) : Error {
     override val message: String get() = "user '${this.id}' save failed"
 }
 
-sealed class UserSearchError(
-    private val id: String,
-) : Error {
-    class UserSearchFailedError(
-        id: String,
-    ) : UserSearchError(id) {
-        override val message: String get() = "user '${super.id}' search failed"
+sealed class UserSearchError : Error {
+    data class UserSearchFailedError(
+        val id: String,
+    ) : UserSearchError() {
+        override val message: String get() = "user '${this.id}' search failed"
     }
 
-    class UserNotFoundError(
-        id: String,
-    ) : UserSearchError(id) {
-        override val message: String get() = "user '${super.id}' not found"
+    data class UserNotFoundError(
+        val id: String,
+    ) : UserSearchError() {
+        override val message: String get() = "user '${this.id}' not found"
     }
 }

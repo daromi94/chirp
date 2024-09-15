@@ -10,21 +10,21 @@ interface UserRepository {
 }
 
 data class UserSaveFailedError(
-    val id: String,
+    val id: UserId,
 ) : Error {
-    override val message: String get() = "user '${this.id}' save failed"
+    override val message: String get() = "user '${this.id.value}' save failed"
 }
 
-sealed class UserSearchError : Error {
-    data class UserSearchFailedError(
-        val id: String,
-    ) : UserSearchError() {
-        override val message: String get() = "user '${this.id}' search failed"
-    }
+sealed interface UserSearchError : Error
 
-    data class UserNotFoundError(
-        val id: String,
-    ) : UserSearchError() {
-        override val message: String get() = "user '${this.id}' not found"
-    }
+data class UserSearchFailedError(
+    val id: UserId,
+) : UserSearchError {
+    override val message: String get() = "user '${this.id.value}' search failed"
+}
+
+data class UserNotFoundError(
+    val id: UserId,
+) : UserSearchError {
+    override val message: String get() = "user '${this.id.value}' not found"
 }

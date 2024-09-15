@@ -10,21 +10,21 @@ interface PostRepository {
 }
 
 data class PostSaveFailedError(
-    val id: String,
+    val id: PostId,
 ) : Error {
-    override val message: String get() = "post '${this.id}' save failed"
+    override val message: String get() = "post '${this.id.value}' save failed"
 }
 
-sealed class PostSearchError : Error {
-    data class PostSearchFailedError(
-        val id: String,
-    ) : PostSearchError() {
-        override val message: String get() = "post '${this.id}' search failed"
-    }
+sealed interface PostSearchError : Error
 
-    data class PostNotFoundError(
-        val id: String,
-    ) : PostSearchError() {
-        override val message: String get() = "post '${this.id}' not found"
-    }
+data class PostSearchFailedError(
+    val id: PostId,
+) : PostSearchError {
+    override val message: String get() = "post '${this.id.value}' search failed"
+}
+
+data class PostNotFoundError(
+    val id: PostId,
+) : PostSearchError {
+    override val message: String get() = "post '${this.id.value}' not found"
 }

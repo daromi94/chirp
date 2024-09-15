@@ -76,9 +76,11 @@ data class PostContent(
     val value: String,
 ) {
     companion object {
+        private const val MAX_LENGTH: Int = 280
+
         fun from(value: String): Either<IllegalPostCommentError, PostContent> =
             either {
-                ensure(value.isNotBlank()) {
+                ensure(value.isNotBlank() && value.length <= MAX_LENGTH) {
                     IllegalPostCommentError(value)
                 }
                 PostContent(value)

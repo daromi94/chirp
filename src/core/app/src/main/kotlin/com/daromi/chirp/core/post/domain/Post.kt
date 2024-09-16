@@ -78,18 +78,29 @@ data class PostContent(
     companion object {
         private const val MAX_LENGTH: Int = 280
 
-        fun from(value: String): Either<IllegalPostCommentError, PostContent> =
+        fun from(value: String): Either<IllegalPostContentError, PostContent> =
             either {
-                ensure(value.isNotBlank() && value.length <= MAX_LENGTH) {
-                    IllegalPostCommentError(value)
+                ensure(value.isNotBlank()) {
+                    PostContentIsBlankError(value)
+                }
+                ensure(value.length <= MAX_LENGTH) {
+                    PostContentExceedsMaxLengthError(value)
                 }
                 PostContent(value)
             }
 
-        data class IllegalPostCommentError(
+        sealed interface IllegalPostContentError : Error
+
+        data class PostContentIsBlankError(
             val value: String,
-        ) : Error {
-            override val message: String get() = "illegal post comment '${this.value}'"
+        ) : IllegalPostContentError {
+            override val message: String get() = "post content cannot be blank"
+        }
+
+        data class PostContentExceedsMaxLengthError(
+            val value: String,
+        ) : IllegalPostContentError {
+            override val message: String get() = "post content exceeds the maximum length of $MAX_LENGTH characters"
         }
     }
 }

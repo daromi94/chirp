@@ -4,15 +4,17 @@ import arrow.core.Either
 import com.daromi.chirp.core.shared.Error
 
 interface UserRepository {
-    fun save(user: User): Either<UserSaveFailedError, User>
+    fun save(user: User): Either<UserSaveError, User>
 
     fun search(id: UserId): Either<UserSearchError, User>
 }
 
+sealed interface UserSaveError : Error
+
 data class UserSaveFailedError(
     val id: UserId,
-) : Error {
-    override val message: String get() = "user '${this.id.value}' save failed"
+) : UserSaveError {
+    override val message: String get() = "failed to save user with id '${this.id.value}'"
 }
 
 sealed interface UserSearchError : Error
@@ -20,11 +22,11 @@ sealed interface UserSearchError : Error
 data class UserSearchFailedError(
     val id: UserId,
 ) : UserSearchError {
-    override val message: String get() = "user '${this.id.value}' search failed"
+    override val message: String get() = "failed to search for user with id '${this.id.value}'"
 }
 
 data class UserNotFoundError(
     val id: UserId,
 ) : UserSearchError {
-    override val message: String get() = "user '${this.id.value}' not found"
+    override val message: String get() = "user with id '${this.id.value}' was not found"
 }

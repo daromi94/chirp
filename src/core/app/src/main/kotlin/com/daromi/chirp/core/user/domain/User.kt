@@ -105,16 +105,27 @@ data class UserHandle(
     companion object {
         fun from(value: String): Either<IllegalUserHandleError, UserHandle> =
             either {
-                ensure(value.isNotBlank() && value.startsWith("@")) {
-                    IllegalUserHandleError(value)
+                ensure(value.isNotBlank()) {
+                    UserHandleIsBlankError(value)
+                }
+                ensure(value.startsWith("@")) {
+                    UserHandleMissingAtSignError(value)
                 }
                 UserHandle(value)
             }
 
-        data class IllegalUserHandleError(
+        sealed interface IllegalUserHandleError : Error
+
+        data class UserHandleIsBlankError(
             val value: String,
-        ) : Error {
-            override val message: String get() = "illegal user handle '${this.value}'"
+        ) : IllegalUserHandleError {
+            override val message: String get() = "user handle cannot be blank"
+        }
+
+        data class UserHandleMissingAtSignError(
+            val value: String,
+        ) : IllegalUserHandleError {
+            override val message: String get() = "user handle must start with an '@' sign"
         }
     }
 }

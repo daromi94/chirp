@@ -84,7 +84,7 @@ data class PostContent(
                     PostContentIsBlankError(value)
                 }
                 ensure(value.length <= MAX_LENGTH) {
-                    PostContentExceedsMaxLengthError(value)
+                    PostContentExceedsMaxLengthError(value, MAX_LENGTH)
                 }
                 PostContent(value)
             }
@@ -99,8 +99,9 @@ data class PostContent(
 
         data class PostContentExceedsMaxLengthError(
             val value: String,
+            val maxLength: Int,
         ) : IllegalPostContentError {
-            override val message: String get() = "post content exceeds the maximum length of $MAX_LENGTH characters"
+            override val message: String get() = "post content exceeds the maximum length of ${this.maxLength} characters"
         }
     }
 }

@@ -1,9 +1,5 @@
 package com.daromi.chirp.core.user.domain
 
-import arrow.core.Either
-import arrow.core.raise.either
-import arrow.core.raise.ensure
-import com.daromi.chirp.core.shared.Error
 import java.time.LocalDateTime
 
 class User private constructor(
@@ -15,18 +11,26 @@ class User private constructor(
 ) {
     companion object {
         fun create(
-            id: String,
-            name: String,
-            handle: String,
-            createdAt: LocalDateTime,
-        ): User =
-            User(
-                UserId(id),
-                UserName(name),
-                UserHandle(handle),
-                UserCreatedAt(createdAt),
-                UserUpdatedAt(createdAt),
+            rawId: String,
+            rawName: String,
+            rawHandle: String,
+            rawCreatedAt: LocalDateTime,
+        ): User? {
+            val id = UserId.from(rawId) ?: return null
+            val name = UserName.from(rawName) ?: return null
+            val handle = UserHandle.from(rawHandle) ?: return null
+
+            val createdAt = UserCreatedAt(rawCreatedAt)
+            val updatedAt = UserUpdatedAt(rawCreatedAt)
+
+            return User(
+                id,
+                name,
+                handle,
+                createdAt,
+                updatedAt,
             )
+        }
     }
 
     val id: String get() = this._id.value
@@ -40,19 +44,37 @@ class User private constructor(
     val updatedAt: LocalDateTime get() = this._updatedAt.value
 
     fun updateName(
-        name: String,
-        updatedAt: LocalDateTime,
-    ) {
-        this._name = UserName(name)
-        this._updatedAt = UserUpdatedAt(updatedAt)
+        rawName: String,
+        rawUpdatedAt: LocalDateTime,
+    ): Boolean {
+        val name = UserName.from(rawName) ?: return false
+
+        val updatedAt = UserUpdatedAt(rawUpdatedAt)
+        if (!updatedAt.isAfter(this._createdAt)) {
+            return false
+        }
+
+        this._name = name
+        this._updatedAt = updatedAt
+
+        return true
     }
 
     fun updateHandle(
-        handle: String,
-        updatedAt: LocalDateTime,
-    ) {
-        this._handle = UserHandle(handle)
-        this._updatedAt = UserUpdatedAt(updatedAt)
+        rawHandle: String,
+        rawUpdatedAt: LocalDateTime,
+    ): Boolean {
+        val handle = UserHandle.from(rawHandle) ?: return false
+
+        val updatedAt = UserUpdatedAt(rawUpdatedAt)
+        if (!updatedAt.isAfter(this._createdAt)) {
+            return false
+        }
+
+        this._handle = handle
+        this._updatedAt = updatedAt
+
+        return true
     }
 
     override fun toString(): String =
@@ -64,19 +86,7 @@ value class UserId(
     val value: String,
 ) {
     companion object {
-        fun from(value: String): Either<IllegalUserIdError, UserId> =
-            either {
-                ensure(value.isNotBlank()) {
-                    IllegalUserIdError(value)
-                }
-                UserId(value)
-            }
-
-        data class IllegalUserIdError(
-            val value: String,
-        ) : Error {
-            override val message: String get() = "illegal user id '${this.value}'"
-        }
+        fun from(value: String): UserId? = if (value.isBlank()) null else UserId(value)
     }
 }
 
@@ -85,19 +95,7 @@ value class UserName(
     val value: String,
 ) {
     companion object {
-        fun from(value: String): Either<IllegalUserNameError, UserName> =
-            either {
-                ensure(value.isNotBlank()) {
-                    IllegalUserNameError(value)
-                }
-                UserName(value)
-            }
-
-        data class IllegalUserNameError(
-            val value: String,
-        ) : Error {
-            override val message: String get() = "illegal user name '${this.value}'"
-        }
+        fun from(value: String): UserName? = if (value.isBlank()) null else UserName(value)
     }
 }
 
@@ -106,30 +104,7 @@ value class UserHandle(
     val value: String,
 ) {
     companion object {
-        fun from(value: String): Either<IllegalUserHandleError, UserHandle> =
-            either {
-                ensure(value.isNotBlank()) {
-                    UserHandleIsBlankError(value)
-                }
-                ensure(value.startsWith("@")) {
-                    UserHandleMissingAtSignError(value)
-                }
-                UserHandle(value)
-            }
-
-        sealed interface IllegalUserHandleError : Error
-
-        data class UserHandleIsBlankError(
-            val value: String,
-        ) : IllegalUserHandleError {
-            override val message: String get() = "user handle cannot be blank"
-        }
-
-        data class UserHandleMissingAtSignError(
-            val value: String,
-        ) : IllegalUserHandleError {
-            override val message: String get() = "user handle must start with an '@' sign"
-        }
+        fun from(value: String): UserHandle? = if (value.isBlank() || !value.startsWith("@")) null else UserHandle(value)
     }
 }
 
@@ -141,4 +116,6 @@ value class UserCreatedAt(
 @JvmInline
 value class UserUpdatedAt(
     val value: LocalDateTime,
-)
+) {
+    fun isAfter(createdAt: UserCreatedAt): Boolean = this.value.isAfter(createdAt.value)
+}

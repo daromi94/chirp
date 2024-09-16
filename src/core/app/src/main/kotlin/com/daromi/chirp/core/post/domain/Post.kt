@@ -1,9 +1,5 @@
 package com.daromi.chirp.core.post.domain
 
-import arrow.core.Either
-import arrow.core.raise.either
-import arrow.core.raise.ensure
-import com.daromi.chirp.core.shared.Error
 import com.daromi.chirp.core.user.domain.UserId
 import java.time.LocalDateTime
 
@@ -16,18 +12,26 @@ class Post private constructor(
 ) {
     companion object {
         fun create(
-            id: String,
-            userId: String,
-            content: String,
-            createdAt: LocalDateTime,
-        ): Post =
-            Post(
-                PostId(id),
-                UserId(userId),
-                PostContent(content),
-                PostCreatedAt(createdAt),
-                PostUpdatedAt(createdAt),
+            rawId: String,
+            rawUserId: String,
+            rawContent: String,
+            rawCreatedAt: LocalDateTime,
+        ): Post? {
+            val id = PostId.from(rawId) ?: return null
+            val userId = UserId.from(rawUserId) ?: return null
+            val content = PostContent.from(rawContent) ?: return null
+
+            val createdAt = PostCreatedAt(rawCreatedAt)
+            val updatedAt = PostUpdatedAt(rawCreatedAt)
+
+            return Post(
+                id,
+                userId,
+                content,
+                createdAt,
+                updatedAt,
             )
+        }
     }
 
     val id: String get() = this._id.value
@@ -41,11 +45,20 @@ class Post private constructor(
     val updatedAt: LocalDateTime get() = this._updatedAt.value
 
     fun update(
-        content: String,
-        updatedAt: LocalDateTime,
-    ) {
-        this._content = PostContent(content)
-        this._updatedAt = PostUpdatedAt(updatedAt)
+        rawContent: String,
+        rawUpdatedAt: LocalDateTime,
+    ): Boolean {
+        val content = PostContent.from(rawContent) ?: return false
+
+        val updatedAt = PostUpdatedAt(rawUpdatedAt)
+        if (!updatedAt.isAfter(this._createdAt)) {
+            return false
+        }
+
+        this._content = content
+        this._updatedAt = updatedAt
+
+        return true
     }
 
     override fun toString(): String =
@@ -57,19 +70,7 @@ value class PostId(
     val value: String,
 ) {
     companion object {
-        fun from(value: String): Either<IllegalPostIdError, PostId> =
-            either {
-                ensure(value.isNotBlank()) {
-                    IllegalPostIdError(value)
-                }
-                PostId(value)
-            }
-
-        data class IllegalPostIdError(
-            val value: String,
-        ) : Error {
-            override val message: String get() = "illegal post id '${this.value}'"
-        }
+        fun from(value: String): PostId? = if (value.isBlank()) null else PostId(value)
     }
 }
 
@@ -80,31 +81,7 @@ value class PostContent(
     companion object {
         private const val MAX_LENGTH: Int = 280
 
-        fun from(value: String): Either<IllegalPostContentError, PostContent> =
-            either {
-                ensure(value.isNotBlank()) {
-                    PostContentIsBlankError(value)
-                }
-                ensure(value.length <= MAX_LENGTH) {
-                    PostContentExceedsMaxLengthError(value, MAX_LENGTH)
-                }
-                PostContent(value)
-            }
-
-        sealed interface IllegalPostContentError : Error
-
-        data class PostContentIsBlankError(
-            val value: String,
-        ) : IllegalPostContentError {
-            override val message: String get() = "post content cannot be blank"
-        }
-
-        data class PostContentExceedsMaxLengthError(
-            val value: String,
-            val maxLength: Int,
-        ) : IllegalPostContentError {
-            override val message: String get() = "post content exceeds the maximum length of ${this.maxLength} characters"
-        }
+        fun from(value: String): PostContent? = if (value.isBlank() || value.length > MAX_LENGTH) null else PostContent(value)
     }
 }
 
@@ -116,4 +93,6 @@ value class PostCreatedAt(
 @JvmInline
 value class PostUpdatedAt(
     val value: LocalDateTime,
-)
+) {
+    fun isAfter(createdAt: PostCreatedAt): Boolean = this.value.isAfter(createdAt.value)
+}

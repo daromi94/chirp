@@ -4,7 +4,7 @@ import arrow.core.Either
 import com.daromi.chirp.core.shared.Error
 
 interface UserRepository {
-    fun save(user: User): Either<UserSaveError, User>
+    fun save(user: User): Either<UserSaveError, Unit>
 
     fun search(id: UserId): Either<UserSearchError, User>
 }

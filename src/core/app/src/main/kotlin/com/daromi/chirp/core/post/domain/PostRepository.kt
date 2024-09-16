@@ -4,7 +4,7 @@ import arrow.core.Either
 import com.daromi.chirp.core.shared.Error
 
 interface PostRepository {
-    fun save(post: Post): Either<PostSaveError, Post>
+    fun save(post: Post): Either<PostSaveError, Unit>
 
     fun search(id: PostId): Either<PostSearchError, Post>
 }

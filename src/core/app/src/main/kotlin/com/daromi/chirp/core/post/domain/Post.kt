@@ -52,7 +52,8 @@ class Post private constructor(
         "Post(id=${this.id}, userId=${this.userId}, content=${this.content}, createdAt=${this.createdAt}, updatedAt=${this.updatedAt})"
 }
 
-data class PostId(
+@JvmInline
+value class PostId(
     val value: String,
 ) {
     companion object {
@@ -72,7 +73,8 @@ data class PostId(
     }
 }
 
-data class PostContent(
+@JvmInline
+value class PostContent(
     val value: String,
 ) {
     companion object {
@@ -106,10 +108,12 @@ data class PostContent(
     }
 }
 
-data class PostCreatedAt(
+@JvmInline
+value class PostCreatedAt(
     val value: LocalDateTime,
 )
 
-data class PostUpdatedAt(
+@JvmInline
+value class PostUpdatedAt(
     val value: LocalDateTime,
 )

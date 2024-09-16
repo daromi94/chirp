@@ -59,7 +59,8 @@ class User private constructor(
         "User(id=${this.id}, name=${this.name}, handle=${this.handle}, createdAt=${this.createdAt}, updatedAt=${this.updatedAt})"
 }
 
-data class UserId(
+@JvmInline
+value class UserId(
     val value: String,
 ) {
     companion object {
@@ -79,7 +80,8 @@ data class UserId(
     }
 }
 
-data class UserName(
+@JvmInline
+value class UserName(
     val value: String,
 ) {
     companion object {
@@ -99,7 +101,8 @@ data class UserName(
     }
 }
 
-data class UserHandle(
+@JvmInline
+value class UserHandle(
     val value: String,
 ) {
     companion object {
@@ -130,10 +133,12 @@ data class UserHandle(
     }
 }
 
-data class UserCreatedAt(
+@JvmInline
+value class UserCreatedAt(
     val value: LocalDateTime,
 )
 
-data class UserUpdatedAt(
+@JvmInline
+value class UserUpdatedAt(
     val value: LocalDateTime,
 )

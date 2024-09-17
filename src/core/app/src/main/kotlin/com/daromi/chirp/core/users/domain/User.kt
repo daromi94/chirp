@@ -1,6 +1,7 @@
 package com.daromi.chirp.core.users.domain
 
-import java.time.LocalDateTime
+import java.time.Clock
+import java.time.Instant
 
 class User private constructor(
     private val _id: UserId,
@@ -14,7 +15,7 @@ class User private constructor(
             rawId: String,
             rawName: String,
             rawHandle: String,
-            rawCreatedAt: LocalDateTime,
+            rawCreatedAt: Instant,
         ): User? {
             val id     = UserId.from(rawId)         ?: return null
             val name   = UserName.from(rawName)     ?: return null
@@ -39,20 +40,18 @@ class User private constructor(
 
     val handle: String get() = this._handle.value
 
-    val createdAt: LocalDateTime get() = this._createdAt.value
+    val createdAt: Instant get() = this._createdAt.value
 
-    val updatedAt: LocalDateTime get() = this._updatedAt.value
+    val updatedAt: Instant get() = this._updatedAt.value
 
     fun updateName(
         rawName: String,
-        rawUpdatedAt: LocalDateTime,
+        clock: Clock,
     ): Boolean {
         val name = UserName.from(rawName) ?: return false
 
-        val updatedAt = UserUpdatedAt(rawUpdatedAt)
-        if (!updatedAt.isAfter(this._createdAt)) {
-            return false
-        }
+        val updatedAt = UserUpdatedAt(clock.instant())
+        check(updatedAt.isAfter(this._createdAt) && updatedAt.isAfter(this._updatedAt))
 
         this._name      = name
         this._updatedAt = updatedAt
@@ -62,14 +61,12 @@ class User private constructor(
 
     fun updateHandle(
         rawHandle: String,
-        rawUpdatedAt: LocalDateTime,
+        clock: Clock,
     ): Boolean {
         val handle = UserHandle.from(rawHandle) ?: return false
 
-        val updatedAt = UserUpdatedAt(rawUpdatedAt)
-        if (!updatedAt.isAfter(this._createdAt)) {
-            return false
-        }
+        val updatedAt = UserUpdatedAt(clock.instant())
+        check(updatedAt.isAfter(this._createdAt) && updatedAt.isAfter(this._updatedAt))
 
         this._handle    = handle
         this._updatedAt = updatedAt
@@ -110,12 +107,14 @@ private value class UserHandle(
 
 @JvmInline
 private value class UserCreatedAt(
-    val value: LocalDateTime,
+    val value: Instant,
 )
 
 @JvmInline
 private value class UserUpdatedAt(
-    val value: LocalDateTime,
+    val value: Instant,
 ) {
     fun isAfter(createdAt: UserCreatedAt): Boolean = this.value.isAfter(createdAt.value)
+
+    fun isAfter(updatedAt: UserUpdatedAt): Boolean = this.value.isAfter(updatedAt.value)
 }

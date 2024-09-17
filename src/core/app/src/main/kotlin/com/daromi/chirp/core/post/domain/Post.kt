@@ -17,8 +17,8 @@ class Post private constructor(
             rawContent: String,
             rawCreatedAt: LocalDateTime,
         ): Post? {
-            val id = PostId.from(rawId) ?: return null
-            val userId = UserId.from(rawUserId) ?: return null
+            val id      = PostId.from(rawId)           ?: return null
+            val userId  = UserId.from(rawUserId)       ?: return null
             val content = PostContent.from(rawContent) ?: return null
 
             val createdAt = PostCreatedAt(rawCreatedAt)
@@ -55,7 +55,7 @@ class Post private constructor(
             return false
         }
 
-        this._content = content
+        this._content   = content
         this._updatedAt = updatedAt
 
         return true

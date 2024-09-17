@@ -16,8 +16,8 @@ class User private constructor(
             rawHandle: String,
             rawCreatedAt: LocalDateTime,
         ): User? {
-            val id = UserId.from(rawId) ?: return null
-            val name = UserName.from(rawName) ?: return null
+            val id     = UserId.from(rawId)         ?: return null
+            val name   = UserName.from(rawName)     ?: return null
             val handle = UserHandle.from(rawHandle) ?: return null
 
             val createdAt = UserCreatedAt(rawCreatedAt)
@@ -54,7 +54,7 @@ class User private constructor(
             return false
         }
 
-        this._name = name
+        this._name      = name
         this._updatedAt = updatedAt
 
         return true
@@ -71,7 +71,7 @@ class User private constructor(
             return false
         }
 
-        this._handle = handle
+        this._handle    = handle
         this._updatedAt = updatedAt
 
         return true

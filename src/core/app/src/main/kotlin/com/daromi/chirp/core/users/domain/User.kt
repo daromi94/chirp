@@ -17,8 +17,8 @@ class User private constructor(
             rawHandle: String,
             rawCreatedAt: Instant,
         ): User? {
-            val id     = UserId.from(rawId)         ?: return null
-            val name   = UserName.from(rawName)     ?: return null
+            val id = UserId.from(rawId) ?: return null
+            val name = UserName.from(rawName) ?: return null
             val handle = UserHandle.from(rawHandle) ?: return null
 
             val createdAt = UserCreatedAt(rawCreatedAt)
@@ -49,11 +49,11 @@ class User private constructor(
         clock: Clock,
     ): Boolean {
         val name = UserName.from(rawName) ?: return false
-
         val updatedAt = UserUpdatedAt(clock.instant())
+
         check(updatedAt.isAfter(this._createdAt) && updatedAt.isAfter(this._updatedAt))
 
-        this._name      = name
+        this._name = name
         this._updatedAt = updatedAt
 
         return true
@@ -64,11 +64,11 @@ class User private constructor(
         clock: Clock,
     ): Boolean {
         val handle = UserHandle.from(rawHandle) ?: return false
-
         val updatedAt = UserUpdatedAt(clock.instant())
+
         check(updatedAt.isAfter(this._createdAt) && updatedAt.isAfter(this._updatedAt))
 
-        this._handle    = handle
+        this._handle = handle
         this._updatedAt = updatedAt
 
         return true

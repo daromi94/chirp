@@ -1,7 +1,8 @@
 package com.daromi.chirp.core.posts.domain
 
 import com.daromi.chirp.core.users.domain.UserId
-import java.time.LocalDateTime
+import java.time.Clock
+import java.time.Instant
 
 class Post private constructor(
     private val _id: PostId,
@@ -15,7 +16,7 @@ class Post private constructor(
             rawId: String,
             rawUserId: String,
             rawContent: String,
-            rawCreatedAt: LocalDateTime,
+            rawCreatedAt: Instant,
         ): Post? {
             val id      = PostId.from(rawId)           ?: return null
             val userId  = UserId.from(rawUserId)       ?: return null
@@ -40,20 +41,18 @@ class Post private constructor(
 
     val content: String get() = this._content.value
 
-    val createdAt: LocalDateTime get() = this._createdAt.value
+    val createdAt: Instant get() = this._createdAt.value
 
-    val updatedAt: LocalDateTime get() = this._updatedAt.value
+    val updatedAt: Instant get() = this._updatedAt.value
 
     fun update(
         rawContent: String,
-        rawUpdatedAt: LocalDateTime,
+        clock: Clock,
     ): Boolean {
         val content = PostContent.from(rawContent) ?: return false
 
-        val updatedAt = PostUpdatedAt(rawUpdatedAt)
-        if (!updatedAt.isAfter(this._createdAt)) {
-            return false
-        }
+        val updatedAt = PostUpdatedAt(clock.instant())
+        check(updatedAt.isAfter(this._createdAt) && updatedAt.isAfter(this._updatedAt))
 
         this._content   = content
         this._updatedAt = updatedAt
@@ -87,12 +86,14 @@ private value class PostContent(
 
 @JvmInline
 private value class PostCreatedAt(
-    val value: LocalDateTime,
+    val value: Instant,
 )
 
 @JvmInline
 private value class PostUpdatedAt(
-    val value: LocalDateTime,
+    val value: Instant,
 ) {
     fun isAfter(createdAt: PostCreatedAt): Boolean = this.value.isAfter(createdAt.value)
+
+    fun isAfter(updatedAt: PostUpdatedAt): Boolean = this.value.isAfter(updatedAt.value)
 }

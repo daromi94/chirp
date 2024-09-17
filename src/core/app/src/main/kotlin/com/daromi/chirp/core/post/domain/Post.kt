@@ -75,7 +75,7 @@ value class PostId(
 }
 
 @JvmInline
-value class PostContent(
+private value class PostContent(
     val value: String,
 ) {
     companion object {
@@ -86,12 +86,12 @@ value class PostContent(
 }
 
 @JvmInline
-value class PostCreatedAt(
+private value class PostCreatedAt(
     val value: LocalDateTime,
 )
 
 @JvmInline
-value class PostUpdatedAt(
+private value class PostUpdatedAt(
     val value: LocalDateTime,
 ) {
     fun isAfter(createdAt: PostCreatedAt): Boolean = this.value.isAfter(createdAt.value)

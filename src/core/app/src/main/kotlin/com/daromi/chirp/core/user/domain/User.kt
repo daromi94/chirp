@@ -91,7 +91,7 @@ value class UserId(
 }
 
 @JvmInline
-value class UserName(
+private value class UserName(
     val value: String,
 ) {
     companion object {
@@ -100,7 +100,7 @@ value class UserName(
 }
 
 @JvmInline
-value class UserHandle(
+private value class UserHandle(
     val value: String,
 ) {
     companion object {
@@ -109,12 +109,12 @@ value class UserHandle(
 }
 
 @JvmInline
-value class UserCreatedAt(
+private value class UserCreatedAt(
     val value: LocalDateTime,
 )
 
 @JvmInline
-value class UserUpdatedAt(
+private value class UserUpdatedAt(
     val value: LocalDateTime,
 ) {
     fun isAfter(createdAt: UserCreatedAt): Boolean = this.value.isAfter(createdAt.value)

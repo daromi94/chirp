@@ -1,6 +1,6 @@
-package com.daromi.chirp.core.post.domain
+package com.daromi.chirp.core.posts.domain
 
-import com.daromi.chirp.core.user.domain.UserId
+import com.daromi.chirp.core.users.domain.UserId
 import java.time.LocalDateTime
 
 class Post private constructor(

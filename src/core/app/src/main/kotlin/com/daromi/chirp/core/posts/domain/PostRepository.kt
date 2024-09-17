@@ -1,4 +1,4 @@
-package com.daromi.chirp.core.post.domain
+package com.daromi.chirp.core.posts.domain
 
 interface PostRepository {
     fun save(post: Post)

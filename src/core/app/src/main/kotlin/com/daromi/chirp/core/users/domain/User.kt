@@ -1,4 +1,4 @@
-package com.daromi.chirp.core.user.domain
+package com.daromi.chirp.core.users.domain
 
 import java.time.LocalDateTime
 

@@ -52,7 +52,7 @@ class Post private constructor(
         val content = PostContent.from(rawContent) ?: return false
         val updatedAt = PostUpdatedAt(clock.instant())
 
-        check(updatedAt.isAfter(this._createdAt) && updatedAt.isAfter(this._updatedAt))
+        assert(updatedAt.isAfter(this._createdAt) && updatedAt.isAfter(this._updatedAt))
 
         this._content = content
         this._updatedAt = updatedAt

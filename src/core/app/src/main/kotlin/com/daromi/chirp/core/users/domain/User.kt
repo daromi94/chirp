@@ -51,7 +51,8 @@ class User private constructor(
         val name = UserName.from(rawName) ?: return false
         val updatedAt = UserUpdatedAt(clock.instant())
 
-        assert(updatedAt.isAfter(this._createdAt) && updatedAt.isAfter(this._updatedAt))
+        assert(updatedAt.isAfter(this._createdAt))
+        assert(updatedAt.isAfter(this._updatedAt))
 
         this._name = name
         this._updatedAt = updatedAt
@@ -66,7 +67,8 @@ class User private constructor(
         val handle = UserHandle.from(rawHandle) ?: return false
         val updatedAt = UserUpdatedAt(clock.instant())
 
-        assert(updatedAt.isAfter(this._createdAt) && updatedAt.isAfter(this._updatedAt))
+        assert(updatedAt.isAfter(this._createdAt))
+        assert(updatedAt.isAfter(this._updatedAt))
 
         this._handle = handle
         this._updatedAt = updatedAt

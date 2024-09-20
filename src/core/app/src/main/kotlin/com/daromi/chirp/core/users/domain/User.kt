@@ -8,28 +8,26 @@ class User private constructor(
     private var _name: UserName,
     private var _handle: UserHandle,
     private val _createdAt: UserCreatedAt,
-    private var _updatedAt: UserUpdatedAt,
+    private var _updatedAt: UserUpdatedAt? = null,
 ) {
     companion object {
         fun create(
             rawId: String,
             rawName: String,
             rawHandle: String,
-            rawCreatedAt: Instant,
+            clock: Clock,
         ): User? {
             val id = UserId.from(rawId) ?: return null
             val name = UserName.from(rawName) ?: return null
             val handle = UserHandle.from(rawHandle) ?: return null
 
-            val createdAt = UserCreatedAt(rawCreatedAt)
-            val updatedAt = UserUpdatedAt(rawCreatedAt)
+            val createdAt = UserCreatedAt(clock.instant())
 
             return User(
                 id,
                 name,
                 handle,
                 createdAt,
-                updatedAt,
             )
         }
     }
@@ -42,7 +40,7 @@ class User private constructor(
 
     val createdAt: Instant get() = this._createdAt.value
 
-    val updatedAt: Instant get() = this._updatedAt.value
+    val updatedAt: Instant? get() = this._updatedAt?.value
 
     fun updateName(
         rawName: String,
@@ -52,7 +50,7 @@ class User private constructor(
         val updatedAt = UserUpdatedAt(clock.instant())
 
         assert(updatedAt.isAfter(this._createdAt))
-        assert(updatedAt.isAfter(this._updatedAt))
+        assert(this._updatedAt == null || updatedAt.isAfter(this._updatedAt!!))
 
         this._name = name
         this._updatedAt = updatedAt
@@ -68,7 +66,7 @@ class User private constructor(
         val updatedAt = UserUpdatedAt(clock.instant())
 
         assert(updatedAt.isAfter(this._createdAt))
-        assert(updatedAt.isAfter(this._updatedAt))
+        assert(this._updatedAt == null || updatedAt.isAfter(this._updatedAt!!))
 
         this._handle = handle
         this._updatedAt = updatedAt
@@ -116,7 +114,7 @@ private value class UserCreatedAt(
 private value class UserUpdatedAt(
     val value: Instant,
 ) {
-    fun isAfter(createdAt: UserCreatedAt): Boolean = this.value.isAfter(createdAt.value)
+    fun isAfter(other: UserUpdatedAt): Boolean = this.value.isAfter(other.value)
 
-    fun isAfter(updatedAt: UserUpdatedAt): Boolean = this.value.isAfter(updatedAt.value)
+    fun isAfter(createdAt: UserCreatedAt): Boolean = this.value.isAfter(createdAt.value)
 }

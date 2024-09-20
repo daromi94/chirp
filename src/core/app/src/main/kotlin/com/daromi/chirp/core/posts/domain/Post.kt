@@ -9,28 +9,26 @@ class Post private constructor(
     private val _userId: UserId,
     private var _content: PostContent,
     private val _createdAt: PostCreatedAt,
-    private var _updatedAt: PostUpdatedAt,
+    private var _updatedAt: PostUpdatedAt? = null,
 ) {
     companion object {
         fun create(
             rawId: String,
             rawUserId: String,
             rawContent: String,
-            rawCreatedAt: Instant,
+            clock: Clock,
         ): Post? {
             val id = PostId.from(rawId) ?: return null
             val userId = UserId.from(rawUserId) ?: return null
             val content = PostContent.from(rawContent) ?: return null
 
-            val createdAt = PostCreatedAt(rawCreatedAt)
-            val updatedAt = PostUpdatedAt(rawCreatedAt)
+            val createdAt = PostCreatedAt(clock.instant())
 
             return Post(
                 id,
                 userId,
                 content,
                 createdAt,
-                updatedAt,
             )
         }
     }
@@ -43,7 +41,7 @@ class Post private constructor(
 
     val createdAt: Instant get() = this._createdAt.value
 
-    val updatedAt: Instant get() = this._updatedAt.value
+    val updatedAt: Instant? get() = this._updatedAt?.value
 
     fun update(
         rawContent: String,
@@ -53,7 +51,7 @@ class Post private constructor(
         val updatedAt = PostUpdatedAt(clock.instant())
 
         assert(updatedAt.isAfter(this._createdAt))
-        assert(updatedAt.isAfter(this._updatedAt))
+        assert(this._updatedAt == null || updatedAt.isAfter(this._updatedAt!!))
 
         this._content = content
         this._updatedAt = updatedAt
@@ -94,7 +92,7 @@ private value class PostCreatedAt(
 private value class PostUpdatedAt(
     val value: Instant,
 ) {
-    fun isAfter(createdAt: PostCreatedAt): Boolean = this.value.isAfter(createdAt.value)
+    fun isAfter(other: PostUpdatedAt): Boolean = this.value.isAfter(other.value)
 
-    fun isAfter(updatedAt: PostUpdatedAt): Boolean = this.value.isAfter(updatedAt.value)
+    fun isAfter(createdAt: PostCreatedAt): Boolean = this.value.isAfter(createdAt.value)
 }

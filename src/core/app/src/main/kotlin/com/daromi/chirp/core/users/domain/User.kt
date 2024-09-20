@@ -101,7 +101,9 @@ private value class UserHandle(
     val value: String,
 ) {
     companion object {
-        fun from(value: String): UserHandle? = if (value.isBlank() || !value.startsWith("@")) null else UserHandle(value)
+        private const val PREFIX: String = "@"
+
+        fun from(value: String): UserHandle? = if (value.isBlank() || !value.startsWith(PREFIX)) null else UserHandle(value)
     }
 }
 

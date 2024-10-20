@@ -12,8 +12,8 @@ private constructor(
         rawName: String,
         rawHandle: String,
     ): User? {
-      val id = UserId.from(rawId) ?: return null
-      val name = UserName.from(rawName) ?: return null
+      val id     = UserId.from(rawId)         ?: return null
+      val name   = UserName.from(rawName)     ?: return null
       val handle = UserHandle.from(rawHandle) ?: return null
 
       return User(id, name, handle)

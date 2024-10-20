@@ -14,8 +14,8 @@ private constructor(
         rawUserId: String,
         rawContent: String,
     ): Post? {
-      val id = PostId.from(rawId) ?: return null
-      val userId = UserId.from(rawUserId) ?: return null
+      val id      = PostId.from(rawId)           ?: return null
+      val userId  = UserId.from(rawUserId)       ?: return null
       val content = PostContent.from(rawContent) ?: return null
 
       return Post(id, userId, content)

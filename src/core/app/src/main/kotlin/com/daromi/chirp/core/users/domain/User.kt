@@ -32,7 +32,9 @@ private constructor(
     return true
   }
 
-  override fun toString(): String = "User(id=${this.id}, name=${this.name}, handle=${this.handle})"
+  override fun toString(): String {
+    return "User(${this.id.value}, ${this.name.value}, ${this.handle.value})"
+  }
 }
 
 @JvmInline

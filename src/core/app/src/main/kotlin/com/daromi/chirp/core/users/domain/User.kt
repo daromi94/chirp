@@ -20,13 +20,13 @@ private constructor(
     }
   }
 
-  fun rename(rawName: String): Boolean {
+  fun changeName(rawName: String): Boolean {
     this.name = UserName.from(rawName) ?: return false
 
     return true
   }
 
-  fun updateHandle(rawHandle: String): Boolean {
+  fun changeHandle(rawHandle: String): Boolean {
     this.handle = UserHandle.from(rawHandle) ?: return false
 
     return true

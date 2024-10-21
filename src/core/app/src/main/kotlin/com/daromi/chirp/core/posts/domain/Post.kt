@@ -22,7 +22,7 @@ private constructor(
     }
   }
 
-  fun update(rawContent: String): Boolean {
+  fun changeContent(rawContent: String): Boolean {
     this.content = PostContent.from(rawContent) ?: return false
 
     return true

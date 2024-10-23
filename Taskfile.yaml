@@ -1,11 +1,11 @@
-version: '3'
+version: "3"
 
 includes:
   core:
-    taskfile: ./src/core/Taskfile.yaml
-    dir: ./src/core
+    taskfile: src/core/Taskfile.yaml
+    dir: src/core
 
 tasks:
   default:
     cmds:
-      - task --list-all
+      - task -a

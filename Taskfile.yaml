@@ -7,5 +7,4 @@ includes:
 
 tasks:
   default:
-    cmds:
-      - task -a
+    cmd: task -a

@@ -1,18 +1,14 @@
 version: "3"
 
 tasks:
-  clean:
-    cmds:
-      - ./gradlew clean
-
-  build:
-    cmds:
-      - ./gradlew build
+  default:
+    cmd: task -a
 
   test:
-    cmds:
-      - ./gradlew test
+    cmd: ./gradlew test
 
-  run:
-    cmds:
-      - ./gradlew run
+  clean:
+    cmd: ./gradlew clean
+
+  build:
+    cmd: ./gradlew build

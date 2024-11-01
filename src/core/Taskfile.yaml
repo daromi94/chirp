@@ -4,11 +4,11 @@ tasks:
   default:
     cmd: task -a
 
-  test:
-    cmd: ./gradlew test
-
   clean:
     cmd: ./gradlew clean
 
   build:
     cmd: ./gradlew build
+
+  test:
+    cmd: ./gradlew test

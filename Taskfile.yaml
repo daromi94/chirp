@@ -1,9 +1,13 @@
 version: "3"
 
+vars:
+  # Modules
+  CORE_DIR: src/core
+
 includes:
   core:
-    taskfile: src/core/Taskfile.yaml
-    dir: src/core
+    taskfile: "{{.CORE_DIR}}/Taskfile.yaml"
+    dir: "{{.CORE_DIR}}"
 
 tasks:
   default:

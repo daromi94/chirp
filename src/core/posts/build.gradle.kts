@@ -7,9 +7,9 @@ version = "0.1.0"
 repositories { mavenCentral() }
 
 dependencies {
-  implementation(project(":users"))
+    implementation(project(":users"))
 
-  testImplementation(libs.kotlin.test)
+    testImplementation(libs.kotlin.test)
 }
 
 kotlin { jvmToolchain(21) }

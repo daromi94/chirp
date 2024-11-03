@@ -1,8 +1,25 @@
 [versions]
+# Base
 kotlin = "2.0.21"
 
+# Spring
+spring-boot = "3.3.5"
+spring-dep = "1.1.6"
+
 [libraries]
+# Base
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 
+# Spring
+spring-web = { module = "org.springframework.boot:spring-boot-starter-web" }
+spring-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+jackson-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin" }
+
 [plugins]
+# Base
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+
+# Spring
+kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+spring-dep = { id = "io.spring.dependency-management", version.ref = "spring-dep" }

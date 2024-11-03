@@ -6,12 +6,6 @@ plugins {
     alias(libs.plugins.spring.dep)
 }
 
-group = "com.daromi.chirp"
-
-version = "0.1.0"
-
-repositories { mavenCentral() }
-
 dependencies {
     implementation(libs.spring.web)
     implementation(libs.jackson.kotlin)

@@ -6,6 +6,7 @@ class User private constructor(
     private var handle: UserHandle,
 ) {
     companion object {
+        @JvmStatic
         fun create(
             rawId: String,
             rawName: String,
@@ -37,6 +38,7 @@ value class UserId(
     val value: String,
 ) {
     companion object {
+        @JvmStatic
         fun from(value: String): UserId? {
             if (value.isBlank()) return null
 
@@ -50,6 +52,7 @@ private value class UserName(
     val value: String,
 ) {
     companion object {
+        @JvmStatic
         fun from(value: String): UserName? {
             if (value.isBlank()) return null
 
@@ -65,6 +68,7 @@ private value class UserHandle(
     companion object {
         private const val PREFIX: String = "@"
 
+        @JvmStatic
         fun from(value: String): UserHandle? {
             if (value.isBlank() || !value.startsWith(PREFIX)) return null
 

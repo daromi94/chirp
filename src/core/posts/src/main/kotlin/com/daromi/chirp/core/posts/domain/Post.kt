@@ -8,6 +8,7 @@ class Post private constructor(
     private var content: PostContent,
 ) {
     companion object {
+        @JvmStatic
         fun create(
             rawId: String,
             rawUserId: String,
@@ -33,6 +34,7 @@ value class PostId(
     val value: String,
 ) {
     companion object {
+        @JvmStatic
         fun from(value: String): PostId? {
             if (value.isBlank()) return null
 
@@ -48,6 +50,7 @@ private value class PostContent(
     companion object {
         private const val MAX_LENGTH: UShort = 280u
 
+        @JvmStatic
         fun from(value: String): PostContent? {
             if (value.isBlank() || value.length.toUShort() > MAX_LENGTH) return null
 

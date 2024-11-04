@@ -1,7 +1,19 @@
-plugins { alias(libs.plugins.kotlin.jvm) }
+plugins {
+    alias(libs.plugins.kotlin.jvm)
 
-dependencies { testImplementation(libs.kotlin.test) }
+    alias(libs.plugins.kotlin.spring)
+}
 
-kotlin { jvmToolchain(21) }
+dependencies {
+    implementation(libs.jackson.kotlin)
+    implementation(libs.spring.web)
+
+    testImplementation(libs.kotlin.test)
+}
+
+kotlin {
+    jvmToolchain(21)
+    compilerOptions { freeCompilerArgs.addAll("-Xjsr305=strict") }
+}
 
 tasks.test { useJUnitPlatform() }

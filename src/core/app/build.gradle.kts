@@ -2,16 +2,21 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
 
     alias(libs.plugins.kotlin.spring)
-    alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dep)
+    alias(libs.plugins.spring.boot)
 }
 
 dependencies {
-    implementation(libs.spring.web)
+    // Internal
+    implementation(project(":users"))
+    implementation(project(":posts"))
+
+    // External
     implementation(libs.jackson.kotlin)
+    implementation(libs.spring.boot.web)
 
     testImplementation(libs.kotlin.test)
-    testImplementation(libs.spring.test)
+    testImplementation(libs.spring.boot.test)
 }
 
 kotlin {

@@ -1,11 +1,11 @@
-package com.daromi.chirp.core.app
+package com.daromi.chirp.core
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class App
+class Application
 
 fun main(args: Array<String>) {
-    runApplication<App>(*args)
+    runApplication<Application>(*args)
 }

@@ -12,3 +12,6 @@ tasks:
 
   test:
     cmd: ./gradlew test
+
+  run:
+    cmd: ./gradlew bootRun

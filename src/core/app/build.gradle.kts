@@ -12,6 +12,7 @@ dependencies {
     implementation(project(":posts"))
 
     // External
+    implementation(libs.kotlin.reflect)
     implementation(libs.jackson.kotlin)
     implementation(libs.spring.boot.web)
 

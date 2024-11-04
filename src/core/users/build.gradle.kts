@@ -5,6 +5,7 @@ plugins {
 }
 
 dependencies {
+    implementation(libs.kotlin.reflect)
     implementation(libs.jackson.kotlin)
     implementation(libs.spring.web)
 

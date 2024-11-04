@@ -9,6 +9,7 @@ dependencies {
     implementation(project(":users"))
 
     // External
+    implementation(libs.kotlin.reflect)
     implementation(libs.jackson.kotlin)
     implementation(libs.spring.web)
 

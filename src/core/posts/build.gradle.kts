@@ -4,6 +4,10 @@ plugins {
     alias(libs.plugins.kotlin.spring)
 }
 
+group = "com.daromi.chirp.core"
+
+version = "0.1.0-SNAPSHOT"
+
 dependencies {
     // Internal
     implementation(project(":users"))

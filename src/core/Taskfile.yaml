@@ -1,5 +1,8 @@
 version: "3"
 
+vars:
+  DOCKER_IMAGE: daromi/chirp-core
+
 tasks:
   default:
     cmd: task -a
@@ -7,11 +10,18 @@ tasks:
   clean:
     cmd: ./gradlew clean
 
-  build:
-    cmd: ./gradlew build
-
   test:
     cmd: ./gradlew test
 
-  run:
+  build:jar:
+    deps:
+      - clean
+    cmd: ./gradlew bootJar
+
+  build:docker:
+    deps:
+      - build:jar
+    cmd: docker build -t {{.DOCKER_IMAGE}}:latest .
+
+  local:shell:run:
     cmd: ./gradlew bootRun

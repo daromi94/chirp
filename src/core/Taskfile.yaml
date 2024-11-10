@@ -23,5 +23,5 @@ tasks:
       - build:jar
     cmd: docker build -t {{.DOCKER_IMAGE}}:latest .
 
-  local:shell:run:
+  local:host:run:
     cmd: ./gradlew bootRun

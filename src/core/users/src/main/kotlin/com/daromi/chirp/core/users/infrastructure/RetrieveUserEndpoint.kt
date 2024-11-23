@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class SearchUserController {
+class RetrieveUserEndpoint {
     @GetMapping("/users/{id}")
     fun apply(
         @PathVariable id: String,

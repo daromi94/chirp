@@ -48,11 +48,11 @@ private value class PostContent(
     val value: String,
 ) {
     companion object {
-        private const val MAX_LENGTH: UShort = 280u
+        private const val MAX_LENGTH: Int = 280
 
         @JvmStatic
         fun from(value: String): PostContent? {
-            if (value.isBlank() || value.length.toUShort() > MAX_LENGTH) return null
+            if (value.isBlank() || value.length > MAX_LENGTH) return null
 
             return PostContent(value)
         }

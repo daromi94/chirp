@@ -1,4 +1,4 @@
-package com.daromi.chirp.core.posts.infrastructure
+package com.daromi.chirp.core.users.infrastructure.rest
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class RetrievePostEndpoint {
-    @GetMapping("/posts/{id}")
+class GetUserEndpoint {
+    @GetMapping("/users/{id}")
     fun apply(
         @PathVariable id: String,
-    ): ResponseEntity<String> = ResponseEntity.ok("Post $id")
+    ): ResponseEntity<String> = ResponseEntity.ok("User $id")
 }

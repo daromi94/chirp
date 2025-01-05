@@ -1,4 +1,4 @@
-package com.daromi.chirp.core
+package com.daromi.chirp.core.infrastructure.rest
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping

@@ -1,10 +1,10 @@
 package com.daromi.chirp.core.users.application
 
 import com.daromi.chirp.core.users.domain.User
-import com.daromi.chirp.core.users.domain.UserRepository
+import com.daromi.chirp.core.users.domain.UserStore
 
 class UserCreator(
-    private val repository: UserRepository,
+    private val store: UserStore,
 ) {
     fun apply(command: CreateUserCommand) {
         val user = User.create(command.id, command.name, command.handle)
@@ -12,7 +12,7 @@ class UserCreator(
             TODO()
         }
 
-        repository.save(user)
+        store.save(user)
     }
 }
 

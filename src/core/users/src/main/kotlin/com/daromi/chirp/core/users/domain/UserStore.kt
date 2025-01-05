@@ -1,9 +1,9 @@
 package com.daromi.chirp.core.users.domain
 
-interface UserRepository {
+interface UserStore {
     fun save(user: User)
 
-    fun retrieve(id: UserId): User?
+    fun search(id: UserId): User?
 
     fun exists(id: UserId): Boolean
 }

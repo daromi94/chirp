@@ -1,9 +1,9 @@
 package com.daromi.chirp.core.posts.domain
 
-interface PostRepository {
+interface PostStore {
     fun save(post: Post)
 
-    fun retrieve(id: PostId): Post?
+    fun search(id: PostId): Post?
 
     fun exists(id: PostId): Boolean
 }

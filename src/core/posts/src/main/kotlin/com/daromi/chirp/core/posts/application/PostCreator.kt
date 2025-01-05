@@ -1,10 +1,10 @@
 package com.daromi.chirp.core.posts.application
 
 import com.daromi.chirp.core.posts.domain.Post
-import com.daromi.chirp.core.posts.domain.PostRepository
+import com.daromi.chirp.core.posts.domain.PostStore
 
 class PostCreator(
-    private val repository: PostRepository,
+    private val store: PostStore,
 ) {
     fun apply(command: CreatePostCommand) {
         val post = Post.create(command.id, command.userId, command.content)
@@ -12,7 +12,7 @@ class PostCreator(
             TODO()
         }
 
-        repository.save(post)
+        store.save(post)
     }
 }
 

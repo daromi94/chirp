@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.spring)
 }
 
-group = "com.daromi.chirp.core"
+group = "com.daromi.chirp.core.posts"
 
 version = "0.1.0-SNAPSHOT"
 

@@ -5,7 +5,7 @@ plugins {
     alias(libs.plugins.spring.boot)
 }
 
-group = "com.daromi.chirp.core"
+group = "com.daromi.chirp.core.app"
 
 version = "0.1.0-SNAPSHOT"
 

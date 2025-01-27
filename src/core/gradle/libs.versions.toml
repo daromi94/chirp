@@ -1,37 +1,20 @@
 [versions]
-# Kotlin
 kotlin = "2.1.0"
-
-# Jackson
 jackson = "2.18.2"
-
-# Spring
 spring = "6.2.1"
 spring-dep = "1.1.7"
 spring-boot = "3.4.1"
 
 [libraries]
-# Kotlin
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
-
-# Jackson
 jackson-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
-
-# Spring
 spring-web = { module = "org.springframework:spring-web", version.ref = "spring" }
-
-# Spring Boot
 spring-boot-web = { module = "org.springframework.boot:spring-boot-starter-web" }
 spring-boot-test = { module = "org.springframework.boot:spring-boot-starter-test" }
 
 [plugins]
-# Kotlin
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-
-# Spring
 kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
 spring-dep = { id = "io.spring.dependency-management", version.ref = "spring-dep" }
-
-# Spring Boot
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }

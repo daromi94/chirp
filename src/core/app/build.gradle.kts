@@ -9,12 +9,12 @@ group = "com.daromi.chirp.core.app"
 
 version = "0.1.0-SNAPSHOT"
 
+repositories { mavenCentral() }
+
 dependencies {
-    // Internal
     implementation(project(":users"))
     implementation(project(":posts"))
 
-    // External
     implementation(libs.kotlin.reflect)
     implementation(libs.jackson.kotlin)
     implementation(libs.spring.boot.web)

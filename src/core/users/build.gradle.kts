@@ -7,6 +7,8 @@ group = "com.daromi.chirp.core.users"
 
 version = "0.1.0-SNAPSHOT"
 
+repositories { mavenCentral() }
+
 dependencies {
     implementation(libs.kotlin.reflect)
     implementation(libs.jackson.kotlin)

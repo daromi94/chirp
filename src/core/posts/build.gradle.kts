@@ -7,11 +7,11 @@ group = "com.daromi.chirp.core.posts"
 
 version = "0.1.0-SNAPSHOT"
 
+repositories { mavenCentral() }
+
 dependencies {
-    // Internal
     implementation(project(":users"))
 
-    // External
     implementation(libs.kotlin.reflect)
     implementation(libs.jackson.kotlin)
     implementation(libs.spring.web)

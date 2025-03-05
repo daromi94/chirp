@@ -20,14 +20,14 @@ class User private constructor(
         }
     }
 
-    fun changeName(rawName: String): Boolean {
-        this.name = UserName.from(rawName) ?: return false
+    fun changeName(name: String): Boolean {
+        this.name = UserName.from(name) ?: return false
 
         return true
     }
 
-    fun changeHandle(rawHandle: String): Boolean {
-        this.handle = UserHandle.from(rawHandle) ?: return false
+    fun changeHandle(handle: String): Boolean {
+        this.handle = UserHandle.from(handle) ?: return false
 
         return true
     }
@@ -40,7 +40,9 @@ value class UserId(
     companion object {
         @JvmStatic
         fun from(value: String): UserId? {
-            if (value.isBlank()) return null
+            if (value.isBlank()) {
+                return null
+            }
 
             return UserId(value)
         }
@@ -54,7 +56,9 @@ private value class UserName(
     companion object {
         @JvmStatic
         fun from(value: String): UserName? {
-            if (value.isBlank()) return null
+            if (value.isBlank()) {
+                return null
+            }
 
             return UserName(value)
         }
@@ -68,9 +72,21 @@ private value class UserHandle(
     companion object {
         private const val PREFIX: String = "@"
 
+        private const val MIN_LENGTH: Int = 10
+
         @JvmStatic
         fun from(value: String): UserHandle? {
-            if (value.isBlank() || !value.startsWith(PREFIX)) return null
+            if (value.isBlank()) {
+                return null
+            }
+
+            if (!value.startsWith(PREFIX)) {
+                return null
+            }
+
+            if (value.length < MIN_LENGTH) {
+                return null
+            }
 
             return UserHandle(value)
         }

@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class PostEndpoints {
+class GetPostById {
     @GetMapping("/posts/{id}")
-    fun getById(
+    fun apply(
         @PathVariable id: String,
-    ): ResponseEntity<String> = ResponseEntity.ok("Post $id")
+    ): ResponseEntity<String> = ResponseEntity.ok("post $id")
 }

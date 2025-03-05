@@ -22,8 +22,8 @@ class Post private constructor(
         }
     }
 
-    fun changeContent(rawContent: String): Boolean {
-        this.content = PostContent.from(rawContent) ?: return false
+    fun changeContent(content: String): Boolean {
+        this.content = PostContent.from(content) ?: return false
 
         return true
     }
@@ -36,7 +36,9 @@ value class PostId(
     companion object {
         @JvmStatic
         fun from(value: String): PostId? {
-            if (value.isBlank()) return null
+            if (value.isBlank()) {
+                return null
+            }
 
             return PostId(value)
         }
@@ -52,7 +54,13 @@ private value class PostContent(
 
         @JvmStatic
         fun from(value: String): PostContent? {
-            if (value.isBlank() || value.length > MAX_LENGTH) return null
+            if (value.isBlank()) {
+                return null
+            }
+
+            if (value.length > MAX_LENGTH) {
+                return null
+            }
 
             return PostContent(value)
         }

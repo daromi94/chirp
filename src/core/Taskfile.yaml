@@ -1,8 +1,5 @@
 version: "3"
 
-vars:
-  DOCKER_IMAGE: daromi/chirp-core
-
 tasks:
   default:
     cmd: task -a
@@ -13,20 +10,22 @@ tasks:
   test:
     cmd: ./gradlew test
 
-  build:jar:
+  build:
     deps:
       - clean
     cmd: ./gradlew bootJar
 
-  package:docker:
+  package:
     deps:
-      - build:jar
+      - build
+    vars:
+      DOCKER_IMAGE: daromi/chirp-core
     cmd: docker build -t {{.DOCKER_IMAGE}}:latest .
 
-  local:host:run:
+  localhost:run:
     cmd: ./gradlew bootRun
 
-  local:host:ping:
+  localhost:ping:
     vars:
       PORT: 8080
-    cmd: curl 127.0.0.1:{{.PORT}}/ping
+    cmd: curl localhost:{{.PORT}}/ping

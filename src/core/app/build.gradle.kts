@@ -5,8 +5,7 @@ plugins {
     alias(libs.plugins.spring.boot)
 }
 
-group = "com.daromi.chirp.core.app"
-
+group = "com.daromi.chirp.core"
 version = "0.1.0-SNAPSHOT"
 
 repositories { mavenCentral() }
@@ -15,16 +14,21 @@ dependencies {
     implementation(project(":users"))
     implementation(project(":posts"))
 
+    // Kotlin
     implementation(libs.kotlin.reflect)
-    implementation(libs.jackson.kotlin)
-    implementation(libs.spring.boot.web)
-
     testImplementation(libs.kotlin.test)
+
+    // Jackson
+    implementation(libs.jackson.kotlin)
+
+    // Spring Boot
+    implementation(libs.spring.boot.web)
     testImplementation(libs.spring.boot.test)
 }
 
 kotlin {
     jvmToolchain(21)
+
     compilerOptions { freeCompilerArgs.addAll("-Xjsr305=strict") }
 }
 

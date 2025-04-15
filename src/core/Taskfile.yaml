@@ -28,4 +28,4 @@ tasks:
   localhost:ping:
     vars:
       PORT: 8080
-    cmd: curl localhost:{{.PORT}}/ping
+    cmd: curl -v localhost:{{.PORT}}/ping

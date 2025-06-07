@@ -1,4 +1,4 @@
-package com.daromi.chirp.core.posts.infrastructure.rest
+package com.daromi.chirp.core.posts.infrastructure.http
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class GetPostById {
+class HttpPostApi {
     @GetMapping("/posts/{id}")
-    fun apply(
+    fun findById(
         @PathVariable id: String,
     ): ResponseEntity<String> = ResponseEntity.ok("post $id")
 }

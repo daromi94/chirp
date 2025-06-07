@@ -1,10 +1,10 @@
-# Gradle
+# gradle
 build
 .gradle
 
-# Editors
+# editors
 .idea
 .vscode
 
-# OS
+# os
 .DS_Store

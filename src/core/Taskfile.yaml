@@ -22,10 +22,10 @@ tasks:
       DOCKER_IMAGE: daromi/chirp-core
     cmd: docker build -t {{.DOCKER_IMAGE}}:latest .
 
-  localhost:run:
+  local:run:
     cmd: ./gradlew bootRun
 
-  localhost:ping:
+  local:ping:
     vars:
       PORT: 8080
     cmd: curl -v localhost:{{.PORT}}/ping
